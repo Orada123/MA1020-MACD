@@ -1,20 +1,17 @@
+"""This script will make buy and sell orders"""
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 import time
 import json
-from AUDUSD import Data_Receiver as DR
+from USDCHF import Data_Receiver as DR
 import schedule
 from datetime import datetime
 from selenium.webdriver.common.action_chains import ActionChains
 from urllib3.exceptions import MaxRetryError
 from selenium.common.exceptions import TimeoutException
-
-"""Creates a buy order when requirements are met with tp and sl"""
 
 
 def buy_order():
@@ -67,8 +64,7 @@ def buy_order():
 
             time.sleep(5)
 
-            Buy_px = driver.find_element_by_xpath(
-                '/html/body/div[5]/div/div[3]/div[1]/div/table/tbody/tr[1]/td[3]/div/span')
+            Buy_px = driver.find_element_by_xpath('/html/body/div[5]/div/div[3]/div[1]/div/table/tbody/tr[2]/td[3]/div/span')
             try:
                 while True:
                     try:
@@ -82,7 +78,7 @@ def buy_order():
                         Symbol = driver.find_element_by_id('symbol')
                         Symbol.click()
 
-                        Symbol = driver.find_element_by_xpath('//*[@id="symbol"]/option[1]')
+                        Symbol = driver.find_element_by_xpath('//*[@id="symbol"]/option[2]')
                         Symbol.click()
 
                         # Number of lots
@@ -99,19 +95,20 @@ def buy_order():
 
                         Comment = driver.find_element_by_id('comment')
                         Comment.click()
-                        Comment.send_keys("Buy (MA50200) AUDUSD")
+                        Comment.send_keys("Buy (MA1020 MACD) USDCHF")
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
+
                         TP = str(float(Buy_px.text) + 0.002)
                         Take_Profit.send_keys(TP)
 
                         Buy_btn = driver.find_element_by_xpath('/html/body/div[17]/div/div[3]/button[3]')
                         Buy_btn.click()
 
-                        time.sleep(2)
-
                         Stop_1 = False
+
+                        time. sleep(2)
 
                         driver.quit()
 
@@ -131,8 +128,6 @@ def buy_order():
 
 
 """Creates a sell order when requirements are met with tp and sl"""
-
-
 def sell_order():
     global driver
     Stop_1 = True
@@ -180,9 +175,7 @@ def sell_order():
 
             time.sleep(5)
 
-            Sell_px = driver.find_element_by_xpath(
-                '/html/body/div[5]/div/div[3]/div[1]'
-                '/div/table/tbody/tr[1]/td[2]/div/span')
+            Sell_px = driver.find_element_by_xpath('/html/body/div[5]/div/div[3]/div[1]/div/table/tbody/tr[2]/td[2]/div/span')
 
             try:
                 while True:
@@ -197,7 +190,7 @@ def sell_order():
                         Symbol = driver.find_element_by_id('symbol')
                         Symbol.click()
 
-                        Symbol = driver.find_element_by_xpath('//*[@id="symbol"]/option[1]')
+                        Symbol = driver.find_element_by_xpath('//*[@id="symbol"]/option[2]')
                         Symbol.click()
 
                         # Number of lots
@@ -214,7 +207,7 @@ def sell_order():
 
                         Comment = driver.find_element_by_id('comment')
                         Comment.click()
-                        Comment.send_keys("Sell (MA50200) AUDUSD")
+                        Comment.send_keys("Sell (MA1020 MACD) USDCHF.")
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
@@ -244,14 +237,10 @@ def sell_order():
             driver.quit()
             pass
 
-
-"""Opens the webpage of the trading site and logins into it"""
-
-
 def main_job():
     # Activates Data_Receiver.py
-    Trigger_Flags = {}
-    Crossing_Flags = {}
+    Flags_1 = {}
+    Trigger_Flags_1 = {}
 
     now_1 = datetime.now()
     current_time_1 = now_1.strftime("%H:%M:%S")
@@ -268,22 +257,13 @@ def main_job():
     Buy_flag = retrieve["Buy_flag"]
     Sell_flag = retrieve["Sell_flag"]
 
-
     """When a purchase is made the flags are reverted back to false and an email is sent out or maybe a whatsapp notification"""
     # Constantly checks the
 
     if Buy_flag:
         buy_order()
 
-        print('A buy order has been made! (MA50200) AUDUSD')
-
-        Trigger_Flags["Buy_flag"] = False
-        Trigger_Flags["Sell_flag"] = False
-
-        file_name = "Trigger_Flags.json"
-        with open(file_name, "w") as f_obj:
-            json.dump(Trigger_Flags, f_obj)
-
+        print('A buy order has been made! (MA1020 MACD) USDCHF')
         Crossing_Flags_EMA = {}
 
         Crossing_Flags_EMA['Cross_Up'] = False
@@ -303,17 +283,17 @@ def main_job():
 
         with open(file_name, "w") as f_obj:
             json.dump(Crossing_Flags_MACD, f_obj)
+
+        Trigger_Flags_1["Buy_flag"] = False
+        Trigger_Flags_1["Sell_flag"] = False
+
+        file_name = "Trigger_Flags.json"
+        with open(file_name, "w") as f_obj:
+            json.dump(Trigger_Flags_1, f_obj)
     elif Sell_flag:
         sell_order()
 
-        print('A sell order has been made! (MA50200) AUDUSD')
-
-        Trigger_Flags["Buy_flag"] = False
-        Trigger_Flags["Sell_flag"] = False
-
-        file_name = "Trigger_Flags.json"
-        with open(file_name, "w") as f_obj:
-            json.dump(Trigger_Flags, f_obj)
+        print('A sell order has been made! (MA1020 MACD) USDCHF')
 
         Crossing_Flags_EMA = {}
 
@@ -334,6 +314,13 @@ def main_job():
 
         with open(file_name, "w") as f_obj:
             json.dump(Crossing_Flags_MACD, f_obj)
+
+        Trigger_Flags_1["Buy_flag"] = False
+        Trigger_Flags_1["Sell_flag"] = False
+
+        file_name = "Trigger_Flags.json"
+        with open(file_name, "w") as f_obj:
+            json.dump(Trigger_Flags_1, f_obj)
     else:
         pass
 
@@ -649,4 +636,3 @@ schedule.every().day.at("23:55").do(consolidated)
 while True:
     schedule.run_pending()
     time.sleep(1)
-

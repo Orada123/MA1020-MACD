@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import time
 import json
-import EURJPY as EJ
+from EURJPY import Data_Receiver as DR
 import schedule
 from datetime import datetime
 from selenium.webdriver.common.action_chains import ActionChains
@@ -99,7 +99,7 @@ def buy_order_1():
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
-                        TP = str(float(Buy_px.text) + 0.3)
+                        TP = str(float(Buy_px.text) + 0.2)
                         Take_Profit.send_keys(TP)
 
                         Buy_btn = driver.find_element_by_xpath('/html/body/div[17]/div/div[3]/button[3]')
@@ -211,7 +211,7 @@ def sell_order_1():
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
-                        TP = str(float(Sell_px.text) - 0.3)
+                        TP = str(float(Sell_px.text) - 0.2)
                         Take_Profit.send_keys(TP)
 
                         Sell_btn = driver.find_element_by_xpath('/html/body/div[17]/div/div[3]/button[2]')
@@ -246,7 +246,7 @@ def main_job_1():
     current_time_1 = now_1.strftime("%H:%M:%S")
     print("Current Time = ", current_time_1)
 
-    EJ.retrieve_json()
+    DR.main_job()
 
     file_name = "Trigger_Flags.json"
 

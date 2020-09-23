@@ -19,7 +19,7 @@ def main_job():
     Stop_1 = True
     while Stop_1:
         try:
-            symbol = 'AUDUSD'
+            symbol = 'USDCHF'
             interval = '5min'
             slowperiod = '26'
             signalperiod = '9'

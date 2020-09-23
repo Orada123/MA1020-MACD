@@ -94,14 +94,20 @@ def main_job():
     Crossing_Flag = {}
 
     if current_diff >= 0 > prev_diff:
-        Crossing_Flag['Cross_Up'] = False
+        Crossing_Flag['Cross_Up'] = Prev_Cross_Up
         Crossing_Flag['Cross_Down'] = True
     elif current_diff <= 0 < prev_diff:
         Crossing_Flag['Cross_Up'] = True
-        Crossing_Flag['Cross_Down'] = False
+        Crossing_Flag['Cross_Down'] = Prev_Cross_Down
     else:
         Crossing_Flag['Cross_Up'] = Prev_Cross_Up
         Crossing_Flag['Cross_Down'] = Prev_Cross_Down
+
+    # Update the Crossing flag folder
+    file_name = "Crossing_Flags_EMA.json"
+
+    with open(file_name, "w") as f_obj:
+        json.dump(Crossing_Flag, f_obj)
 
     # Retrieve MACD data
     """MACD"""
@@ -117,15 +123,23 @@ def main_job():
 
     Prev_Cross_Up = retrieve['Cross_Up']
     Prev_Cross_Down = retrieve['Cross_Down']
+
+    Crossing_Flag = {}
+
     if prev_Hist > 0 > current_Hist:
-        Crossing_Flag['Cross_Up'] = False
+        Crossing_Flag['Cross_Up'] = Prev_Cross_Up
         Crossing_Flag['Cross_Down'] = True
     elif prev_Hist < 0 < current_Hist:
         Crossing_Flag['Cross_Up'] = True
-        Crossing_Flag['Cross_Down'] = False
+        Crossing_Flag['Cross_Down'] = Prev_Cross_Down
     else:
         Crossing_Flag['Cross_Up'] = Prev_Cross_Up
         Crossing_Flag['Cross_Down'] = Prev_Cross_Down
+
+    file_name = "Crossing_Flags_MACD.json"
+
+    with open(file_name, "w") as f_obj:
+        json.dump(Crossing_Flag, f_obj)
 
     # Retrieve crossing data for EMA and MACD
     file_name = 'Crossing_Flags_MACD.json'
