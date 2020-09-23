@@ -126,10 +126,10 @@ def main_job():
 
     Crossing_Flag = {}
 
-    if prev_Hist > 0 > current_Hist:
+    if "-" not in prev_Hist and "-" in current_Hist:
         Crossing_Flag['Cross_Up'] = Prev_Cross_Up
         Crossing_Flag['Cross_Down'] = True
-    elif prev_Hist < 0 < current_Hist:
+    elif "-" in prev_Hist and "-" not in current_Hist:
         Crossing_Flag['Cross_Up'] = True
         Crossing_Flag['Cross_Down'] = Prev_Cross_Down
     else:

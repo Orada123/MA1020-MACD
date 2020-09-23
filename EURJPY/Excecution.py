@@ -95,7 +95,7 @@ def buy_order_1():
 
                         Comment = driver.find_element_by_id('comment')
                         Comment.click()
-                        Comment.send_keys("Buy (MA50200) EURJPY")
+                        Comment.send_keys("Buy (MA10 20 MACD) EURJPY")
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
@@ -207,7 +207,7 @@ def sell_order_1():
 
                         Comment = driver.find_element_by_id('comment')
                         Comment.click()
-                        Comment.send_keys("Sell (MA50200) EURJPY")
+                        Comment.send_keys("Sell (MA10 20 MACD) EURJPY")
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
@@ -263,7 +263,7 @@ def main_job_1():
     if Buy_flag:
         buy_order_1()
 
-        print('A buy order has been made! (MA50200) EURJPY')
+        print('A buy order has been made! (MA10 20 MACD) EURJPY')
 
         Trigger_Flags_1["Buy_flag"] = False
         Trigger_Flags_1["Sell_flag"] = False
@@ -294,7 +294,7 @@ def main_job_1():
     elif Sell_flag:
         sell_order_1()
 
-        print('A sell order has been made! (MA50200) EURJPY')
+        print('A sell order has been made! (MA10 20 MACD) EURJPY')
 
         Trigger_Flags_1["Buy_flag"] = False
         Trigger_Flags_1["Sell_flag"] = False

@@ -99,7 +99,7 @@ def buy_order():
 
                         Comment = driver.find_element_by_id('comment')
                         Comment.click()
-                        Comment.send_keys("Buy (MA50200) AUDUSD")
+                        Comment.send_keys("Buy (MA1020 MACD) AUDUSD")
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
@@ -214,7 +214,7 @@ def sell_order():
 
                         Comment = driver.find_element_by_id('comment')
                         Comment.click()
-                        Comment.send_keys("Sell (MA50200) AUDUSD")
+                        Comment.send_keys("Sell (MA10 20 MACD) AUDUSD")
 
                         Take_Profit = driver.find_element_by_id('tp')
                         Take_Profit.click()
@@ -275,7 +275,7 @@ def main_job():
     if Buy_flag:
         buy_order()
 
-        print('A buy order has been made! (MA50200) AUDUSD')
+        print('A buy order has been made! (MA10 20 MACD) AUDUSD')
 
         Trigger_Flags["Buy_flag"] = False
         Trigger_Flags["Sell_flag"] = False
@@ -306,7 +306,7 @@ def main_job():
     elif Sell_flag:
         sell_order()
 
-        print('A sell order has been made! (MA50200) AUDUSD')
+        print('A sell order has been made! (MA10 20 MACD) AUDUSD')
 
         Trigger_Flags["Buy_flag"] = False
         Trigger_Flags["Sell_flag"] = False
